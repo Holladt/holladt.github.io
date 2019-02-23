@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 1102px;
+            height: 1134px;
+        }
+        </style>
+        <title>Holladay_Lab_1</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/USA_PopPlace_1.js"></script>
+        <script src="data/USA_Capital_2.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[2.6360458769799897,-122.69904882142474],[61.6443474585468,-48.66002992446978]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var layer_OpenStreetMap_0 = L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            opacity: 1.0,
+            attribution: '',
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop_USA_PopPlace_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>City</strong><br />' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Population</strong><br />' + (feature.properties['pop_max'] !== null ? Autolinker.link(String(feature.properties['pop_max'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_USA_PopPlace_1_0(feature) {
+            if (feature.properties['q2wHide_scalerank'] >= 0.000000 && feature.properties['q2wHide_scalerank'] <= 1.600000 ) {
+                return {
+                pane: 'pane_USA_PopPlace_1',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,227,214,1.0)',
+            }
+            }
+            if (feature.properties['q2wHide_scalerank'] >= 1.600000 && feature.properties['q2wHide_scalerank'] <= 3.200000 ) {
+                return {
+                pane: 'pane_USA_PopPlace_1',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,238,199,1.0)',
+            }
+            }
+            if (feature.properties['q2wHide_scalerank'] >= 3.200000 && feature.properties['q2wHide_scalerank'] <= 4.800000 ) {
+                return {
+                pane: 'pane_USA_PopPlace_1',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(76,241,148,1.0)',
+            }
+            }
+            if (feature.properties['q2wHide_scalerank'] >= 4.800000 && feature.properties['q2wHide_scalerank'] <= 6.400000 ) {
+                return {
+                pane: 'pane_USA_PopPlace_1',
+                radius: 16.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(48,160,98,1.0)',
+            }
+            }
+            if (feature.properties['q2wHide_scalerank'] >= 6.400000 && feature.properties['q2wHide_scalerank'] <= 8.000000 ) {
+                return {
+                pane: 'pane_USA_PopPlace_1',
+                radius: 20.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(27,90,55,1.0)',
+            }
+            }
+        }
+        map.createPane('pane_USA_PopPlace_1');
+        map.getPane('pane_USA_PopPlace_1').style.zIndex = 401;
+        map.getPane('pane_USA_PopPlace_1').style['mix-blend-mode'] = 'normal';
+        var layer_USA_PopPlace_1 = new L.geoJson(json_USA_PopPlace_1, {
+            attribution: '',
+            pane: 'pane_USA_PopPlace_1',
+            onEachFeature: pop_USA_PopPlace_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_USA_PopPlace_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_USA_PopPlace_1);
+        map.addLayer(layer_USA_PopPlace_1);
+        function pop_USA_Capital_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Capital</strong><br />' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Population</strong><br />' + (feature.properties['pop_max'] !== null ? Autolinker.link(String(feature.properties['pop_max'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_USA_Capital_2_0() {
+            return {
+                pane: 'pane_USA_Capital_2',
+                radius: 12.000000000000004,
+                opacity: 1,
+                color: 'rgba(61,61,61,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(188,26,28,1.0)',
+            }
+        }
+        map.createPane('pane_USA_Capital_2');
+        map.getPane('pane_USA_Capital_2').style.zIndex = 402;
+        map.getPane('pane_USA_Capital_2').style['mix-blend-mode'] = 'normal';
+        var layer_USA_Capital_2 = new L.geoJson(json_USA_Capital_2, {
+            attribution: '',
+            pane: 'pane_USA_Capital_2',
+            onEachFeature: pop_USA_Capital_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_USA_Capital_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_USA_Capital_2);
+        map.addLayer(layer_USA_Capital_2);
+        var title = new L.Control();
+        title.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+        title.update = function () {
+            this._div.innerHTML = '<h2>Holladay_Lab_1</h2>';
+        };
+        title.addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
